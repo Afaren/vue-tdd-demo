@@ -7,9 +7,17 @@ ul input { flex: 1; }
 
 <template>
   <ul>
-    <li><span>用户名：</span><input type="text" class="username" v-model="user.username"></li>
-    <li><span>密码：</span><input type="text" class="password" v-model="user.password"></li>
-    <li><button class="submit" @click="onSubmit" :disabled="!validate">提交</button></li>
+    <li>
+      <label >用户名：</label>
+      <input  type="text" class="username" v-model="user.username">
+    </li>
+    <li>
+      <label for="user.password">密码：</label>
+      <input id="user.password" type="text" class="password" v-model="user.password">
+    </li>
+    <li>
+      <button class="submit" @click="onSubmit" :disabled="!validate">提交</button>
+    </li>
   </ul>
 </template>
 
