@@ -34,16 +34,19 @@ describe('Login Page', () => {
   // todo all old-style test cases
 
   it('Given 用户访问登录页面 And 用户输入用户名、密码，When 点击 submit，Then onSubmit 方法被调用', async () => {
-    const wrapper = mount(Login);
-    const onSubmit = sinon.stub(wrapper.vm, 'onSubmit');
+    const onSumbitSpy = jest.spyOn(Login.methods, 'onSubmit');
 
-    wrapper.find('input.username').setValue('谢小呆');
-    wrapper.find('input.password').setValue('123');
-    // @vue/test-utils 更新到 1.0.3 之后 setValue 不能及时反映到 dom 的 disabled 属性上，需要异步
-    await Vue.nextTick();
-    wrapper.find('button.submit').trigger('click');
+    const { getByLabelText, getByText } = render(Login);
 
-    expect(onSubmit.called).toBeTruthy();
+    const username = getByLabelText('用户名：');
+    const password = getByLabelText('密码：');
+    const sumbit = getByText('提交');
+
+    await fireEvent.update(username, '谢小呆');
+    await fireEvent.update(password, '123');
+    await fireEvent.click(sumbit);
+
+    expect(onSumbitSpy).toHaveBeenCalled();
   });
 
   it('Given 用户访问登录页面，When 用户未输入登录信息，Then submit 按钮为 disabled And 点击 submit 不会调用 onSubmit', async () => {
