@@ -35,11 +35,13 @@ export default {
   }),
   computed: {
     validate() {
+      console.log(`this.user.username && this.user.password: ${this.user.username} --- ${this.user.password}`);
       return this.user.username && this.user.password;
     },
   },
   methods: {
     async onSubmit() {
+      console.log('xxxxxxxxxxxxxxxxxxx');
       const response = await Service.login(this.user);
       if (response.status === 200) {
         this.loginSuccess();

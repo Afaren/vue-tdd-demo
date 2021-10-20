@@ -50,14 +50,9 @@ describe('Login Page', () => {
   });
 
   it('Given 用户访问登录页面，When 用户未输入登录信息，Then submit 按钮为 disabled And 点击 submit 不会调用 onSubmit', async () => {
-    const wrapper = mount(Login);
-    const onSubmit = sinon.stub(wrapper.vm, 'onSubmit');
-    const submitBtn = wrapper.find('button.submit');
-    await Vue.nextTick();
-    submitBtn.trigger('click');
-
-    expect(submitBtn.attributes('disabled')).toEqual('disabled');
-    expect(onSubmit.called).toBeFalsy();
+    const { getByText } = render(Login);
+    const sumbit = getByText('提交');
+    expect(sumbit).toBeDisabled();
   });
 
   it('Given 用户访问登录页面 And 用户输入用户名、密码，When 点击 submit，Then 调用 Service.login() 后返回 200 And 调用 loginSuccess 方法', async () => {
