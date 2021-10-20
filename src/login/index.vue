@@ -8,12 +8,14 @@ ul input { flex: 1; }
 <template>
   <ul>
     <li>
-      <label >用户名：</label>
-      <input  type="text" class="username" v-model="user.username">
+      <label> 用户名：
+        <input  type="text" class="username" v-model="user.username">
+      </label>
     </li>
     <li>
-      <label for="user.password">密码：</label>
-      <input id="user.password" type="text" class="password" v-model="user.password">
+      <label> 密码：
+        <input  type="text" class="password" v-model="user.password">
+      </label>
     </li>
     <li>
       <button class="submit" @click="onSubmit" :disabled="!validate">提交</button>
