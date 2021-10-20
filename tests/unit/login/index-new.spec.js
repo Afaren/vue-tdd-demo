@@ -56,23 +56,25 @@ describe('Login Page', () => {
   });
 
   it('Given 用户访问登录页面 And 用户输入用户名、密码，When 点击 submit，Then 调用 Service.login() 后返回 200 And 调用 loginSuccess 方法', async () => {
-    const stub = sinon.stub(Service, 'login');
-    stub.resolves({ status: 200 });
+    Service.login = jest.fn();
+    Service.login.mockResolvedValue({ status: 200 });
 
-    const wrapper = mount(Login);
-    const loginSuccess = sinon.stub(wrapper.vm, 'loginSuccess');
+    const loginSuccess = jest.spyOn(Login.methods, 'loginSuccess');
+    loginSuccess.mockImplementation();
 
-    const expectedUser = { username: '谢小呆', password: '123' };
-    wrapper.find('input.username').setValue(expectedUser.username);
-    wrapper.find('input.password').setValue(expectedUser.password);
+    const { getByLabelText, getByText } = render(Login);
+
+    const username = getByLabelText('用户名：');
+    const password = getByLabelText('密码：');
+    const sumbit = getByText('提交');
+
+    await fireEvent.update(username, '谢小呆');
+    await fireEvent.update(password, '123');
+    await fireEvent.click(sumbit);
+
     await Vue.nextTick();
-    wrapper.find('button.submit').trigger('click');
 
-    await Vue.nextTick();
-
-    expect(loginSuccess.called).toBeTruthy();
-    expect(stub.alwaysCalledWith(expectedUser)).toBeTruthy();
-    stub.restore();
+    expect(loginSuccess).toHaveBeenCalled();
   });
 
   it('Given 用户访问登录页面 And 用户输入用户名、密码，When 点击 submit，Then 调用 Service.login() 后返回不等于 200 And 调用 loginFailure 方法', async () => {

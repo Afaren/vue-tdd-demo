@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     async onSubmit() {
-      console.log('xxxxxxxxxxxxxxxxxxx');
       const response = await Service.login(this.user);
       if (response.status === 200) {
         this.loginSuccess();
