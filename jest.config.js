@@ -45,6 +45,13 @@ module.exports = {
     'text-summary',
     'lcov',
   ],
+  reporters: [
+    'default',
+    ['jest-html-reporters', {
+      publicPath: './html-report',
+      filename: 'report.html',
+    }],
+  ],
   coveragePathIgnorePatterns: [
     '<rootDir>/coverage',
     '<rootDir>/tests',
