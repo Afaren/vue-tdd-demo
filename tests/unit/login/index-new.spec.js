@@ -5,8 +5,9 @@ import sinon from 'sinon';
 import VueRouter from 'vue-router';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Login from '@/login/index.vue';
+import App from '@/App.vue';
 import Service from '@/login/service';
-import router from '@/router';
+import Router from '@/router';
 
 describe('Login Page', () => {
 
@@ -97,6 +98,13 @@ describe('Login Page', () => {
     await Vue.nextTick();
 
     expect(loginFailure).toHaveBeenCalled();
+  });
+
+  it('When App load, should have totally 2 routes', async () => {
+
+    render(App, {routes: Router }, (vue, store, router) => {
+      expect(router.getRoutes()).toHaveLength(2);
+    });
   });
 
   it('When 执行 loginSuccess()，Then $route.path 为 /', async () => {
