@@ -1,7 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/vue';
+import { fireEvent, render } from '@testing-library/vue';
 
 import Vue from 'vue';
-import sinon from 'sinon';
 import VueRouter from 'vue-router';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Login from '@/login/index.vue';
@@ -10,7 +9,6 @@ import Service from '@/login/service';
 import Router from '@/router';
 
 describe('Login Page', () => {
-
   it('When 用户访问登录页面，Then 看到用户名、密码输入框和提交按钮', () => {
     const { getByLabelText, getByText } = render(Login);
 
@@ -101,19 +99,19 @@ describe('Login Page', () => {
   });
 
   it('When App load, should have totally 2 routes', async () => {
-
-    render(App, {routes: Router }, (vue, store, router) => {
+    render(App, { routes: Router }, (vue, store, router) => {
       expect(router.getRoutes()).toHaveLength(2);
     });
   });
 
+  // 在 testing-library 的测试方法中，路由切换不容易测试，只能根据页面的 text 来判断，这里需要考虑投入产出比
   it('When 执行 loginSuccess()，Then $route.path 为 /', async () => {
     const localVue = createLocalVue();
     localVue.use(VueRouter);
 
     const wrapper = mount(Login, {
       localVue,
-      router,
+      router: Router,
     });
 
     wrapper.vm.loginSuccess();
